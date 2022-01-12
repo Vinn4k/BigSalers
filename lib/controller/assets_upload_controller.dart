@@ -32,15 +32,16 @@ class AssetsUploadController extends GetxController{
       ///envia a imagem para o firebase
       await task
           .ref()
-          .child('images/itens/${name.toString()}')
+          .child('images/itens/${name.toString()}.jpg')
           .putFile(file);
       ///seta a url do arquivo
       String downloadURL = await task
-          .ref('images/itens/${name.toString()}')
+          .ref('images/itens/${name.toString()}.jpg')
           .getDownloadURL();
 
       ///envia os products para o fireStore
-      await firestore.collection("products").doc().set({
+     var db=firestore.collection("products").doc();
+      await db.set({
         "title": item.title,
         "type": item.type,
         "description": item.description,
@@ -49,6 +50,7 @@ class AssetsUploadController extends GetxController{
         "width": item.width,
         "price": item.price,
         "rating": item.rating,
+        "id":db.id,
         "created": FieldValue.serverTimestamp()
       });
     }

@@ -1,9 +1,11 @@
+
 import 'package:jr_up/data/model/item_model.dart';
 
-abstract class ItemsRepositoryInterface{
+abstract class IItemsProvider{
   Future<List<ItemModel>>getIAlltems();
-  Future<ItemModel> updateItem(ItemModel data,String id);
   Future<ItemModel> createItem(ItemModel data);
-  Future<ItemModel> deleteItem(String documentId);
+  Future<void> deleteItem(String documentId);
+  Future<ItemModel> getItemById(String documentId);
+  Future <void> updateData(String documentId,ItemModel item);
 
 }

@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 ItemModel itemModelFromJson(String str) => ItemModel.fromJson(json.decode(str));
 String itemModelToJson(ItemModel data) => json.encode(data.toJson());
 class ItemModel {
@@ -10,7 +12,10 @@ class ItemModel {
       this.height, 
       this.width, 
       this.price, 
-      this.rating,});
+      this.rating,
+    this.id,
+    this.created
+  });
 
   ItemModel.fromJson(dynamic json) {
     title = json['title'];
@@ -21,6 +26,8 @@ class ItemModel {
     width = json['width'];
     price = json['price'];
     rating = json['rating'];
+    id = json['id'];
+    created= json['created'];
   }
   String? title;
   String? type;
@@ -30,6 +37,10 @@ class ItemModel {
   int? width;
   double? price;
   int? rating;
+  String? id;
+
+  Timestamp? created;
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -41,6 +52,10 @@ class ItemModel {
     map['width'] = width;
     map['price'] = price;
     map['rating'] = rating;
+    map['id'] = id;
+    map['created'] = created;
+
+
     return map;
   }
 

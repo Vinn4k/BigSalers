@@ -26,7 +26,7 @@ final ItemModel dataForEdit;
       GlobalKey<FormState>()
     ];
 
-    HomeController conroller = HomeController.ctl;
+    HomeController conroller = Get.find<HomeController>();
 
 
     return Scaffold(

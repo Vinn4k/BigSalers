@@ -5,7 +5,9 @@ import 'package:jr_up/widget/app_widget.dart';
 
 
 void main() async {
-  Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  );
   runApp(const AppWidget());
 
 

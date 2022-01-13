@@ -6,12 +6,10 @@ import 'package:get/get_connect/http/src/http/mock/http_request_mock.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:jr_up/widget/app_widget.dart';
 
-class MockFirebaseStorage extends MockClient implements FirebaseStorage{}
 void main() async {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  setUpAll(()async{
-    await Firebase.initializeApp();
-  });
+TestWidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   testWidgets(
     "Teste Botão",
     (WidgetTester tester) async {

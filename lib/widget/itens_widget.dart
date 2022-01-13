@@ -10,6 +10,7 @@ import 'package:jr_up/widget/star_rating_widget.dart';
 class ItensWidget extends StatelessWidget {
   const ItensWidget({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     HomeController controller = Get.find<HomeController>();

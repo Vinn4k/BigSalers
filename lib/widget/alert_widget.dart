@@ -22,13 +22,13 @@ class AlertWidget extends StatelessWidget {
           children: [
             TextButton(onPressed: () async{
              await controller.delete(controller.id.value);
-              Get.back();
+             Get.back();
+
 
             }, child: const Text("Sim", style: TextStyle(
                 color: Colors.red
             ),)),
             TextButton(onPressed: () {
-              Get.back();
             }, child: const Text("Não", style: TextStyle(
                 color: Colors.green
             ),)),

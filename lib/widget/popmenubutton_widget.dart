@@ -8,12 +8,12 @@ import 'package:jr_up/page/edit_iten_page.dart';
 import 'alert_widget.dart';
 enum itemsMenu{editar,remover}
 Widget popMenuButtonWidget( ItemModel data){
-  HomeController controller = HomeController.ctl;
+  HomeController controller = Get.find<HomeController>();
   return PopupMenuButton<itemsMenu>(itemBuilder: (BuildContext context)=>
   <PopupMenuEntry<itemsMenu>>[
      PopupMenuItem(child: ListTile(
       onTap: (){
-
+        Get.back();
         Get.to(()=> EditItenPage(dataForEdit: data,));
       },
       title: const Text("Editar"),
@@ -23,6 +23,7 @@ Widget popMenuButtonWidget( ItemModel data){
      PopupMenuItem(child: ListTile(
       onTap: (){
         controller.id.value=data.id!;
+        Get.back();
 
         Get.defaultDialog(
           title: "Alerta!",

@@ -7,7 +7,6 @@ import 'package:jr_up/data/provider/items_provider.dart';
 import 'package:jr_up/interface/iitems_repository.dart';
 
 class HomeController extends GetxController with StateMixin<List<HomeController>> {
-  static HomeController ctl=HomeController();
   RxBool loading = false.obs;
   RxString id="".obs;
 
@@ -41,9 +40,9 @@ class HomeController extends GetxController with StateMixin<List<HomeController>
     Get.back();
     }
   Future<void> delete(String id)async {
-    loading.value=true;
+  loading.value=true;
     _interface.deleteItem(id);
-    loading.value=false;
+  loading.value=false;
 
   }
 

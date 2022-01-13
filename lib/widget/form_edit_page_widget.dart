@@ -39,6 +39,13 @@ class FormEditPage extends StatelessWidget {
               return errorVazio;
             }
             if(titulo=="Rating"||titulo=="Price"){
+              if(titulo=="Rating"){
+                int val=int.parse(value);
+                if(val>5){
+                  return "Não pode ser Maior que 5";
+                }
+
+              }
               if(!value.isNum){
                 return "Insira Somente Numeros";
               }

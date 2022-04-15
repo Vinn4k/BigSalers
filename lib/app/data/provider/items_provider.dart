@@ -2,13 +2,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import 'package:jr_up/data/model/item_model.dart';
-import 'package:jr_up/interface/iitems_repository.dart';
+import 'package:jr_up/app/data/model/item_model.dart';
+import 'package:jr_up/app/interface/iitems.dart';
 
-class ItemsProvider implements IItemsProvider {
-
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseStorage task = FirebaseStorage.instance;
+class ItemsProvider implements IItems {
+ItemsProvider({required this.firestore});
+  final FirebaseFirestore firestore;
 
   @override
   Future<ItemModel> createItem(ItemModel data) {
@@ -22,7 +21,7 @@ class ItemsProvider implements IItemsProvider {
   }
 
   @override
-  Future<List<ItemModel>> getIAlltems() async {
+  Future<List<ItemModel>> getIAllItems() async {
     try{
     QuerySnapshot data = await firestore.collection("products").get();
     return data.docs.map((item) => ItemModel.fromJson(item)).toList();}

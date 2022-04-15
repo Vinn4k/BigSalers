@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jr_up/controller/home_controller.dart';
-import 'package:jr_up/data/model/item_model.dart';
+import 'package:jr_up/app/controller/home_controller.dart';
+import 'package:jr_up/app/data/model/item_model.dart';
 import 'package:intl/intl.dart';
 import 'package:jr_up/shared/themes/text_styles.dart';
-import 'package:jr_up/widget/popmenubutton_widget.dart';
-import 'package:jr_up/widget/star_rating_widget.dart';
+import 'package:jr_up/app/widget/popmenubutton_widget.dart';
+import 'package:jr_up/app/widget/star_rating_widget.dart';
 
 class ItensWidget extends StatelessWidget {
   const ItensWidget({Key? key}) : super(key: key);
@@ -120,13 +120,13 @@ class ItensWidget extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return Container(child: Text("Error"),);
+            return Text("Error:${snapshot.error}");
           }
         } else if (snapshot.connectionState == ConnectionState.active ||
             snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

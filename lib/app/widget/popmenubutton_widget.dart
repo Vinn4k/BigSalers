@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jr_up/controller/home_controller.dart';
-import 'package:jr_up/data/model/item_model.dart';
-import 'package:jr_up/page/edit_iten_page.dart';
+import 'package:jr_up/app/controller/home_controller.dart';
+import 'package:jr_up/app/data/model/item_model.dart';
+import 'package:jr_up/app/page/edit_iten_page.dart';
 
 import 'alert_widget.dart';
 enum itemsMenu{editar,remover}
 Widget popMenuButtonWidget( ItemModel data){
-  HomeController controller = Get.find<HomeController>();
-  return PopupMenuButton<itemsMenu>(itemBuilder: (BuildContext context)=>
+ final HomeController controller = Get.find<HomeController>();
+  return PopupMenuButton<itemsMenu>(tooltip:"menu",itemBuilder: (BuildContext context)=>
   <PopupMenuEntry<itemsMenu>>[
      PopupMenuItem(child: ListTile(
       onTap: (){

@@ -7,7 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:jr_up/data/model/item_model.dart';
+
+import '../data/model/item_model.dart';
 ///controla o upload de arquivos
 class AssetsUploadController extends GetxController{
   RxBool loading=false.obs;

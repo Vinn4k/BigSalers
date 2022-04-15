@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jr_up/controller/home_controller.dart';
+import 'package:jr_up/app/controller/home_controller.dart';
 
 import 'package:jr_up/shared/themes/app_colors.dart';
-import 'package:jr_up/widget/itens_widget.dart';
+import 'package:jr_up/app/widget/itens_widget.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class HomePage extends GetView<HomeController> {
           ],
         ),
         body:Obx((){
-          return controller.loading.value?Container():ItensWidget();
+          return controller.loading.value?Container():const ItensWidget();
         })
     );
   }

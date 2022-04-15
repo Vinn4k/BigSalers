@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jr_up/controller/home_controller.dart';
-import 'package:jr_up/data/model/item_model.dart';
-import 'package:jr_up/widget/form_edit_page_widget.dart';
+import 'package:jr_up/app/controller/home_controller.dart';
+import 'package:jr_up/app/data/model/item_model.dart';
+import 'package:jr_up/app/widget/form_edit_page_widget.dart';
 
 class EditItenPage extends StatelessWidget {
   const EditItenPage({Key? key, required this.dataForEdit}) : super(key: key);
@@ -121,7 +121,7 @@ final ItemModel dataForEdit;
                   data.rating=int.tryParse(ratinController.value.text);
                   data.type=typeController.value.text;
                   data.filename=dataForEdit.filename;
-                  await conroller.updateIten(data, dataForEdit.id.toString(),
+                  await conroller.updateItem(data, dataForEdit.id.toString(),
                   );conroller.getAllItems();
                 }
               },

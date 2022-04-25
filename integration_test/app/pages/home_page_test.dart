@@ -13,7 +13,7 @@ void main()async{
 
   group("Home Teste", (){
 
-    testWidgets("Teste de listagem de items", (WidgetTester tester) async {
+    testWidgets("Teste de remover  item", (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
       expect(find.byType(Card), findsNWidgets(5));

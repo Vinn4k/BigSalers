@@ -18,16 +18,11 @@ class ItemsRepository implements IItems{
   }
 
   @override
-  Future<void> deleteItem(String documentId) {
-    // TODO: implement deleteItem
-    throw UnimplementedError();
+  Future<void> deleteItem(String documentId) async {
+    _provider.deleteItem(documentId);
   }
 
-  @override
-  Future<List<ItemModel>> getIAllItems() {
 
-    return _provider.getIAllItems();
-  }
 
   @override
   Future<ItemModel> getItemById(String documentId) {
@@ -37,7 +32,12 @@ class ItemsRepository implements IItems{
 
   @override
   Future<void> updateData(String documentId, ItemModel item) {
-    // TODO: implement updateData
-    throw UnimplementedError();
+    return   _provider.updateData(documentId,item);
+  }
+
+  @override
+  Stream<QuerySnapshot> getIAllItems()async* {
+    yield* _provider.getIAllItems();
+
   }
 }

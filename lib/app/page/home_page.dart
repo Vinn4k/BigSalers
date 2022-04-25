@@ -18,6 +18,9 @@ class HomePage extends GetView<HomeController> {
 
           ),
         ),
+        floatingActionButton: FloatingActionButton(onPressed: ()async{
+          controller.sendAssetsToFirebase();
+        },),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: 0,
           items:  const [
@@ -29,9 +32,9 @@ class HomePage extends GetView<HomeController> {
                 icon: Icon(Icons.favorite), label: "Favoritos"),
           ],
         ),
-        body:Obx((){
-          return controller.loading.value?Container():const ItensWidget();
-        })
+        body:
+           const ItensWidget()
+
     );
   }
 }

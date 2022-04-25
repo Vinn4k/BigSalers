@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jr_up/app/controller/home_controller.dart';
@@ -14,16 +15,16 @@ class ItensWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController controller = Get.find<HomeController>();
-    return FutureBuilder(
-      future: controller.getAllItems(),
-      builder: (BuildContext context, AsyncSnapshot<List<ItemModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+    return StreamBuilder(
+      stream: controller.getAllItems(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
           if (snapshot.hasData) {
             return SizedBox(
               width: Get.width,
               height: Get.height,
               child: ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return Card(
                     child: Column(
@@ -39,7 +40,7 @@ class ItensWidget extends StatelessWidget {
                                 height: Get.height * 0.14,
                                 child: Image(
                                   image: NetworkImage(
-                                    '${snapshot.data![index].filename}',
+                                    '${snapshot.data?.docs[index].get("filename")}',
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -58,25 +59,25 @@ class ItensWidget extends StatelessWidget {
                                           Expanded(
                                             flex: 3,
                                             child: Text(
-                                              "${snapshot.data![index].title}",
+                                              "${snapshot.data!.docs[index].get("title")}",
                                               style: TextStyles.titleListTile,
                                             ),
                                           ),
                                           Expanded(
                                             flex: 3,
                                             child: Text(
-                                                "${snapshot.data![index].type}",
+                                                "${snapshot.data!.docs[index].get("type")}",
                                                 style: TextStyles.titleRegular),
                                           ),
                                           Expanded(
-                                            child: popMenuButtonWidget(snapshot.data![index]),
+                                            child: popMenuButtonWidget(ItemModel.fromJson(snapshot.data?.docs[index].data())),
                                           ),
                                         ],
                                       ),
                                       Container(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                            "${snapshot.data![index].rating}",
+                                            "${snapshot.data!.docs[index].get("rating")}",
                                             style: TextStyles.titleListTile),
                                       ),
                                       Row(
@@ -85,11 +86,10 @@ class ItensWidget extends StatelessWidget {
                                         children: [
                                           Row(
                                               children: starRatingWidget(
-                                                  snapshot.data![index]
-                                                          .rating ??
+                                                  snapshot.data!.docs[index].get("rating")??
                                                       0)),
                                           Text(
-                                            "R\$:${snapshot.data![index].price}",
+                                            "R\$:${snapshot.data!.docs[index].get("price")}",
                                             style: TextStyles.titleRegular,
                                           ),
                                         ],
@@ -97,15 +97,8 @@ class ItensWidget extends StatelessWidget {
                                       SizedBox(
                                         height: Get.height * 0.01,
                                       ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "Criado em: ${dateFormate(
-                                            snapshot.data![index].created
-                                                ?.toDate(),
-                                          )}",
-                                        ),
-                                      ),
+
+                                      
                                     ],
                                   ),
                                 ),
@@ -122,12 +115,10 @@ class ItensWidget extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text("Error:${snapshot.error}");
           }
-        } else if (snapshot.connectionState == ConnectionState.active ||
-            snapshot.connectionState == ConnectionState.waiting) {
+
           return const Center(child: CircularProgressIndicator());
         }
-        return const Center(child: CircularProgressIndicator());
-      },
+
     );
   }
 }

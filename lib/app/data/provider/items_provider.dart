@@ -1,6 +1,7 @@
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:jr_up/app/data/model/item_model.dart';
 import 'package:jr_up/app/interface/iitems.dart';
@@ -21,14 +22,14 @@ ItemsProvider({required this.firestore});
   }
 
   @override
-  Future<List<ItemModel>> getIAllItems() async {
-    try{
-    QuerySnapshot data = await firestore.collection("products").get();
-    return data.docs.map((item) => ItemModel.fromJson(item)).toList();}
-    catch(e){
+  Stream<QuerySnapshot> getIAllItems() async*{
 
-      throw Exception("Erro ao obter items");
-    }
+
+    Stream<QuerySnapshot<Map<String, dynamic>>> data=firestore.collection("products").snapshots();
+
+
+   yield* data;
+
   }
 
 

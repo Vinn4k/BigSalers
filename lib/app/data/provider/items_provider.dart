@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:jr_up/app/data/model/item_model.dart';
 import 'package:jr_up/app/interface/iitems.dart';
@@ -18,15 +19,19 @@ ItemsProvider({required this.firestore});
 
   @override
   Future<void> deleteItem(String documentId) async {
-    await firestore.collection("products").doc(documentId).delete();
+    FirebaseStorage task = FirebaseStorage.instance;
+    DocumentReference ref=firestore.collection("products").doc(documentId);
+    DocumentSnapshot data=await ref.get();
+    await task.refFromURL(data.get("filename")).delete();
+    await ref.delete();
   }
+
+
+
 
   @override
   Stream<QuerySnapshot> getIAllItems() async*{
-
-
-    Stream<QuerySnapshot<Map<String, dynamic>>> data=firestore.collection("products").snapshots();
-
+    Stream<QuerySnapshot> data=firestore.collection("products").orderBy("created",descending: true).snapshots();
 
    yield* data;
 

@@ -14,7 +14,7 @@ Widget popMenuButtonWidget( ItemModel data){
      PopupMenuItem(child: ListTile(
       onTap: (){
         Get.back();
-        Get.to(()=> EditItenPage(dataForEdit: data,));
+        Get.to(()=> EditItenPage(dataForEdit: data,isForEdit: true,));
       },
       title: const Text("Editar"),
       leading: const Icon(Icons.edit),

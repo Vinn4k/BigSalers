@@ -1,19 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jr_up/app/data/model/item_model.dart';
 import 'package:jr_up/app/data/provider/items_provider.dart';
 import 'package:jr_up/app/data/repository/items_repository.dart';
-import 'package:jr_up/app/interface/iitems.dart';
 import 'package:path_provider/path_provider.dart';
 
 class HomeController extends GetxController with StateMixin<List<HomeController>> {
   RxBool loading = false.obs;
   RxString id="".obs;
-
+  RxString imageUrl="".obs;
 
   late final ItemsRepository _repository;
 
@@ -46,6 +48,57 @@ class HomeController extends GetxController with StateMixin<List<HomeController>
   loading.value=false;
 
   }
+  Future<void> uploadImage()async{
+
+
+    final result = await FilePicker.platform.pickFiles(type: FileType.any, allowMultiple: false);
+    if (result != null && result.files.isNotEmpty) {
+      final fileBytes =GetPlatform.isWeb? result.files.first.bytes:File(result
+          .files.single.path!);
+     await uploadPhoto(fileBytes!);
+    }
+  } Future<void>deleteUploadPhoto({required String url})async{
+    FirebaseStorage task = FirebaseStorage.instance;
+
+  await task.refFromURL(url).delete();
+  }
+  Future<void>uploadPhoto(dynamic data)async{
+    FirebaseStorage task = FirebaseStorage.instance;
+    int name=DateTime.now().microsecondsSinceEpoch;
+    GetPlatform.isWeb?  await task
+        .ref()
+        .child('images/itens/${name.toString()}.jpg')
+        .putData(data): await task
+        .ref()
+        .child('images/itens/${name.toString()}.jpg')
+        .putFile(data);
+    
+    String downloadURL = await task
+        .ref('images/itens/${name.toString()}.jpg')
+        .getDownloadURL();
+    imageUrl.value=downloadURL;
+  }
+  Future<void> newItem({required ItemModel item})async{
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    loading.value=true;
+
+    DocumentReference db=firestore.collection("products").doc();
+    await db.set({
+      "title": item.title,
+      "type": item.type,
+      "description": item.description,
+      "filename": imageUrl.value,
+      "height": item.height,
+      "width": item.width,
+      "price": item.price,
+      "rating": item.rating,
+      "id":db.id,
+      "created": FieldValue.serverTimestamp()
+    });
+    loading.value=false;
+Get.back();
+  }
+
   ///envia os assets  para o firebase;
   Future<void> sendAssetsToFirebase() async {
     loading.value=true;

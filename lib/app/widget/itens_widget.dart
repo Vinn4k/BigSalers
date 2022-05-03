@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,7 @@ class ItensWidget extends StatelessWidget {
                                 width: Get.width * 0.25,
                                 height: Get.height * 0.14,
                                 child: Image(
-                                  image: NetworkImage(
+                                  image: CachedNetworkImageProvider(
                                     '${snapshot.data?.docs[index].get("filename")}',
                                   ),
                                   fit: BoxFit.cover,

@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jr_up/app/data/model/item_model.dart';
-import 'package:jr_up/app/data/provider/items_provider.dart';
 import 'package:jr_up/app/data/repository/items_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -35,8 +32,12 @@ class HomeController extends GetxController with StateMixin<List<HomeController>
   }
 
     Future<void> updateItem(ItemModel data,String documentId, {File? file})async{
-
     loading.value=true;
+    if(data.filename !=imageUrl.value){
+      await deleteUploadPhoto(url: data.filename!);
+      data.filename=imageUrl.value;
+
+    }
    await _repository.updateData(documentId, data);
     loading.value=false;
 

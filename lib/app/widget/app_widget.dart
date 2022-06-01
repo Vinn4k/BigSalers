@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jr_up/app/binding/home_binding.dart';
 import 'package:jr_up/app/page/home_page.dart';
-import 'package:jr_up/app/page/login_page.dart';
+import 'package:jr_up/app/routes/app_pages.dart';
+import '../routes/app_routes.dart';
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
   @override
@@ -14,14 +14,9 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      initialRoute: "/",
-      getPages: [
-        GetPage(name: "/", page:()=> const HomePage(),
-          binding: HomeBinding(),
+      initialRoute: Routes.INITIAL,
+      getPages: AppPages.routes,
 
-        ),
-        GetPage(name: "/login", page: ()=> const LoginPage())
-      ],
 
     );
   }
